@@ -1,1 +1,88 @@
+import java.util.Scanner;
+
+public class EquacaoSegundoGrau {
+
+    // Atributos para os coeficientes da equação
+    private double a;
+    private double b;
+    private double c;
+
+    // Construtor da classe
+    public EquacaoSegundoGrau(double a, double b, double c) {
+        this.a = a;
+        this.b = b;
+        this.c = c;
+    }
+
+    // Método para resolver a equação de segundo grau
+    public void resolverEquacao() {
+        // Verificar se a, b e c são todos iguais a zero
+        if (a == 0 && b == 0 && c == 0) {
+            System.out.println("Igualdade confirmada: 0 = 0");
+            return;
+        }
+
+        // Verificar se a e b são iguais a zero e c é diferente de zero
+        if (a == 0 && b == 0 && c != 0) {
+            System.out.println("Coeficientes informados incorretamente");
+            return;
+        }
+
+        // Verificar se a é igual a zero e b é diferente de zero
+        if (a == 0 && b != 0) {
+            System.out.println("Esta é uma equação de primeiro grau");
+            double raiz = -c / b;
+            System.out.println("A raiz da equação é: " + raiz);
+            return;
+        }
+
+        // Caso a seja diferente de zero, temos uma equação de segundo grau
+        System.out.println("Esta é uma equação de segundo grau");
+
+        // Calcular o discriminante
+        double delta = b * b - 4 * a * c;
+
+        // Verificar o valor do discriminante
+        if (delta < 0) {
+            System.out.println("Esta equação não possui raízes reais");
+        } else if (delta == 0) {
+            System.out.println("Esta equação possui duas raízes reais iguais");
+            double raiz = -b / (2 * a);
+            System.out.println("A raiz da equação é: " + raiz);
+        } else {
+            System.out.println("Esta equação possui duas raízes reais diferentes");
+            double raiz1 = (-b + Math.sqrt(delta)) / (2 * a);
+            double raiz2 = (-b - Math.sqrt(delta)) / (2 * a);
+            System.out.println("As raízes da equação são: " + raiz1 + " e " + raiz2);
+        }
+    }
+
+    // Método principal para testar a classe
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        String continuar;
+
+        do {
+            // Solicitar os coeficientes do usuário
+            System.out.println("Digite o coeficiente a:");
+            double a = scanner.nextDouble();
+            System.out.println("Digite o coeficiente b:");
+            double b = scanner.nextDouble();
+            System.out.println("Digite o coeficiente c:");
+            double c = scanner.nextDouble();
+
+            // Criar uma instância da classe EquacaoSegundoGrau com os coeficientes fornecidos
+            EquacaoSegundoGrau equacao = new EquacaoSegundoGrau(a, b, c);
+
+            // Resolver a equação
+            equacao.resolverEquacao();
+
+            // Perguntar ao usuário se deseja continuar
+            System.out.println("Deseja resolver outra equação? (s/n)");
+            continuar = scanner.next();
+        } while (continuar.equalsIgnoreCase("s"));
+
+        scanner.close();
+    }
+}
 
