@@ -1,0 +1,74 @@
+package vendas;
+
+import estoque.Produto;
+
+public class VendaProduto {
+    private Produto produto;
+    private int quantidade;
+
+    public VendaProduto(Produto produto, int quantidade) throws QuantidadeInsuficienteException {
+        if (quantidade > produto.getQuantidadeEmEstoque()) {
+            throw new QuantidadeInsuficienteException("Quantidade insuficiente em estoque para venda.");
+        }
+        this.produto = produto;
+        this.quantidade = quantidade;
+        // Atualizar quantidade em estoque após venda
+        produto.setQuantidadeEmEstoque(produto.getQuantidadeEmEstoque() - quantidade);
+    }
+
+    // Getters e Setters
+    // Métodos adicionais conforme necessidade
+}
+
+// Exceção personalizada para quantidade insuficiente em estoque
+class QuantidadeInsuficienteException extends Exception {
+    public QuantidadeInsuficienteException(String message) {
+        super(message);
+    }
+}
+
+
+package vendas;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertThrows;
+import org.junit.Before;
+import org.junit.Test;
+import estoque.Produto;
+
+public class VendaProdutoTest {
+
+    private Produto produto;
+
+    @Before
+    public void setUp() {
+        produto = new Produto("Arroz", 10, 5.0); // Produto inicializado com 10 unidades em estoque
+    }
+
+    @Test
+    public void testVendaProdutoQuantidadeSuficiente() throws QuantidadeInsuficienteException {
+        VendaProduto venda = new VendaProduto(produto, 5);
+        assertEquals(5, produto.getQuantidadeEmEstoque());
+    }
+
+    @Test
+    public void testVendaProdutoQuantidadeInsuficiente() {
+        Throwable exception = assertThrows(QuantidadeInsuficienteException.class, () -> {
+            new VendaProduto(produto, 15); // Tentando vender mais do que está em estoque
+        });
+        assertEquals("Quantidade insuficiente em estoque para venda.", exception.getMessage());
+    }
+}
+
+
+import org.junit.runner.RunWith;
+import org.junit.runners.Suite;
+
+@RunWith(Suite.class)
+@Suite.SuiteClasses({
+    VendaProdutoTest.class,
+    // Outras classes de teste aqui, conforme necessário
+})
+public class TestSuite {
+    // Esta classe só serve como marcador, não precisa de implementação adicional
+}
