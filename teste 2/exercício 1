@@ -1,0 +1,56 @@
+public class EquacaoSegundoGrau {
+
+    // Método para resolver a equação de segundo grau
+    public static void resolverEquacao(double a, double b, double c) {
+        // Verificar se a, b e c são todos iguais a zero
+        if (a == 0 && b == 0 && c == 0) {
+            System.out.println("Igualdade confirmada: 0 = 0");
+            return;
+        }
+
+        // Verificar se a e b são iguais a zero e c é diferente de zero
+        if (a == 0 && b == 0 && c != 0) {
+            System.out.println("Coeficientes informados incorretamente");
+            return;
+        }
+
+        // Verificar se a é igual a zero e b é diferente de zero
+        if (a == 0 && b != 0) {
+            System.out.println("Esta é uma equação de primeiro grau");
+            double raiz = -c / b;
+            System.out.println("A raiz da equação é: " + raiz);
+            return;
+        }
+
+        // Caso a seja diferente de zero, temos uma equação de segundo grau
+        System.out.println("Esta é uma equação de segundo grau");
+
+        // Calcular o discriminante
+        double delta = b * b - 4 * a * c;
+
+        // Verificar o valor do discriminante
+        if (delta < 0) {
+            System.out.println("Esta equação não possui raízes reais");
+        } else if (delta == 0) {
+            System.out.println("Esta equação possui duas raízes reais iguais");
+            double raiz = -b / (2 * a);
+            System.out.println("A raiz da equação é: " + raiz);
+        } else {
+            System.out.println("Esta equação possui duas raízes reais diferentes");
+            double raiz1 = (-b + Math.sqrt(delta)) / (2 * a);
+            double raiz2 = (-b - Math.sqrt(delta)) / (2 * a);
+            System.out.println("As raízes da equação são: " + raiz1 + " e " + raiz2);
+        }
+    }
+
+    // Método principal para testar a classe
+    public static void main(String[] args) {
+        // Teste com diferentes coeficientes
+        resolverEquacao(0, 0, 0); // Igualdade confirmada: 0 = 0
+        resolverEquacao(0, 0, 5); // Coeficientes informados incorretamente
+        resolverEquacao(0, 2, 4); // Esta é uma equação de primeiro grau; A raiz da equação é: -2.0
+        resolverEquacao(1, -3, 2); // Esta é uma equação de segundo grau; As raízes da equação são: 2.0 e 1.0
+        resolverEquacao(1, 2, 1); // Esta equação possui duas raízes reais iguais; A raiz da equação é: -1.0
+        resolverEquacao(1, 2, 3); // Esta equação não possui raízes reais
+    }
+}
