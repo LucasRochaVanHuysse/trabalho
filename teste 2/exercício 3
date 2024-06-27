@@ -1,0 +1,100 @@
+src
+├── equacao
+│   └── EquacaoSegundoGrau.java
+└── test
+    └── EquacaoSegundoGrauTest.java
+package equacao;
+
+public class EquacaoSegundoGrau {
+
+    // Atributos para os coeficientes da equação
+    private double a;
+    private double b;
+    private double c;
+
+    // Construtor da classe
+    public EquacaoSegundoGrau(double a, double b, double c) {
+        this.a = a;
+        this.b = b;
+        this.c = c;
+    }
+
+    // Método para resolver a equação de segundo grau
+    public String resolverEquacao() {
+        // Verificar se a, b e c são todos iguais a zero
+        if (a == 0 && b == 0 && c == 0) {
+            return "Igualdade confirmada: 0 = 0";
+        }
+
+        // Verificar se a e b são iguais a zero e c é diferente de zero
+        if (a == 0 && b == 0 && c != 0) {
+            return "Coeficientes informados incorretamente";
+        }
+
+        // Verificar se a é igual a zero e b é diferente de zero
+        if (a == 0 && b != 0) {
+            double raiz = -c / b;
+            return "Esta é uma equação de primeiro grau: x = " + raiz;
+        }
+
+        // Caso a seja diferente de zero, temos uma equação de segundo grau
+        double delta = b * b - 4 * a * c;
+
+        if (delta < 0) {
+            return "Esta é uma equação de segundo grau. Esta equação não possui raízes reais (delta < 0): delta = " + delta;
+        } else if (delta == 0) {
+            double raiz = -b / (2 * a);
+            return "Esta é uma equação de segundo grau. Esta equação possui duas raízes reais iguais: x' = x'' = " + raiz;
+        } else {
+            double raiz1 = (-b + Math.sqrt(delta)) / (2 * a);
+            double raiz2 = (-b - Math.sqrt(delta)) / (2 * a);
+            return "Esta é uma equação de segundo grau. Esta equação possui duas raízes reais diferentes: delta = " + delta + ", x' = " + raiz1 + ", x'' = " + raiz2;
+        }
+    }
+}
+
+package test;
+
+import equacao.EquacaoSegundoGrau;
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
+public class EquacaoSegundoGrauTest {
+
+    @Test
+    public void testIgualdadeConfirmada() {
+        EquacaoSegundoGrau equacao = new EquacaoSegundoGrau(0, 0, 0);
+        assertEquals("Igualdade confirmada: 0 = 0", equacao.resolverEquacao());
+    }
+
+    @Test
+    public void testCoeficientesInformadosIncorretamente() {
+        EquacaoSegundoGrau equacao = new EquacaoSegundoGrau(0, 0, 8);
+        assertEquals("Coeficientes informados incorretamente", equacao.resolverEquacao());
+    }
+
+    @Test
+    public void testEquacaoPrimeiroGrau() {
+        EquacaoSegundoGrau equacao = new EquacaoSegundoGrau(0, 2, -8);
+        assertEquals("Esta é uma equação de primeiro grau: x = 4.0", equacao.resolverEquacao());
+    }
+
+    @Test
+    public void testEquacaoSegundoGrauSemRaizesReais() {
+        EquacaoSegundoGrau equacao = new EquacaoSegundoGrau(10, -4, 12);
+        assertEquals("Esta é uma equação de segundo grau. Esta equação não possui raízes reais (delta < 0): delta = -464.0", equacao.resolverEquacao());
+    }
+
+    @Test
+    public void testEquacaoSegundoGrauComRaizesIguais() {
+        EquacaoSegundoGrau equacao = new EquacaoSegundoGrau(4, -4, 1);
+        assertEquals("Esta é uma equação de segundo grau. Esta equação possui duas raízes reais iguais: x' = x'' = 0.5", equacao.resolverEquacao());
+    }
+
+    @Test
+    public void testEquacaoSegundoGrauComRaizesDiferentes() {
+        EquacaoSegundoGrau equacao = new EquacaoSegundoGrau(1, 6, 7);
+        assertEquals("Esta é uma equação de segundo grau. Esta equação possui duas raízes reais diferentes: delta = 8.0, x' = -1.5857864376269049, x'' = -4.414213562373095", equacao.resolverEquacao());
+    }
+}
+
