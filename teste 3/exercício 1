@@ -1,0 +1,79 @@
+Refatoração da Prática 02
+
+/src
+   /main
+       /java
+           /loja
+               Produto.java
+               Main.java
+   /test
+       /java
+           /loja
+               MainTest.java
+
+
+package loja;
+
+import org.junit.jupiter.api.Test;
+import java.time.DayOfWeek;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import static org.junit.jupiter.api.Assertions.*;
+
+public class MainTest {
+
+    @Test
+    public void testCalculoTotalComDescontoEEntrega() {
+        // Configuração inicial
+        boolean clienteVIP = false;
+        Produto p1 = new Produto("Arroz", 5, 18.75);
+        Produto p2 = new Produto("Feijão", 1, 4.95);
+        Produto p3 = new Produto("Leite", 1, 3.49);
+        ArrayList<Produto> produtos = new ArrayList<>();
+        produtos.add(p1);
+        produtos.add(p2);
+        produtos.add(p3);
+
+        // Execução
+        double total = Main.calcularTotal(produtos, clienteVIP);
+
+        // Verificação
+        DayOfWeek diaSemana = LocalDate.now().getDayOfWeek();
+        double taxaEsperada = (diaSemana == DayOfWeek.SUNDAY) ? 10.00 : 5.00;
+        assertEquals(44.465, total, 0.001); // Valor esperado após descontos e taxa de entrega
+    }
+}
+
+
+
+Refatoração da Prática 03
+
+
+/src
+   /main
+       /java
+           Main.java
+   /test
+       /java
+           MainTest.java
+
+
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
+
+public class MainTest {
+
+    @Test
+    public void testMediaVetor1() {
+        double[] vet1 = {90, 88, 78, 76};
+        double media = Main.calcularMedia(vet1);
+        assertEquals(83.0, media, 0.001); // Média esperada para vet1
+    }
+
+    @Test
+    public void testMediaVetor2() {
+        double[] vet2 = {865, 564, 43, 12};
+        double media = Main.calcularMedia(vet2);
+        assertEquals(371.0, media, 0.001); // Média esperada para vet2
+    }
+}
